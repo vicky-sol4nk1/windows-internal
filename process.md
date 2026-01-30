@@ -231,3 +231,189 @@ explorer.exe → cmd.exe
 * Suspended processes → evasion
 
 ---
+
+
+Alright, this is **MITRE ATT&CK + Windows Internals gold** 🥇
+I’ll explain **what it is**, **why attackers use it**, and a **realistic scenario** — **no commands, no how-to abuse**, just solid understanding (perfect for TryHackMe, exams, blue team).
+
+---
+
+# 🧠 T1055 – Process Injection (Parent Technique)
+
+## 🔹 What is Process Injection?
+
+**Process Injection** means:
+
+> Attacker runs **malicious code inside a legitimate process** instead of creating a new obvious one.
+
+🎯 Goal:
+
+* Stealth
+* Evasion
+* Privilege abuse
+
+👉 Instead of `evil.exe`, malware hides inside `explorer.exe`, `svchost.exe`, etc.
+
+---
+
+## 🔥 Why attackers love it
+
+* Antivirus trusts legit processes
+* Blends into normal activity
+* Harder to detect than new processes
+
+---
+
+## 🧪 General Scenario
+
+1. Malware already running (initial access)
+2. Finds a trusted process
+3. Injects code into it
+4. Legit process now executes attacker code
+
+---
+
+---
+
+# 🧬 T1055.012 – **Process Hollowing**
+
+## 🔹 What is Process Hollowing?
+
+A special type of injection where:
+
+> A **legitimate process is started**, then its **original code is removed**, and **malicious code is placed instead**.
+
+💀 The process looks legit, but its soul is gone.
+
+---
+
+## 🧠 How it works (conceptually)
+
+* Start legit process (e.g. `svchost.exe`)
+* Suspend it
+* Remove original memory
+* Insert malicious payload
+* Resume process
+
+🧠 Result:
+
+```
+svchost.exe (name) ❌
+malware.exe (code) ✅
+```
+
+---
+
+## 🎯 Why attackers use hollowing
+
+* File name looks trusted
+* Parent-child relationship looks normal
+* Bypasses simple AV rules
+
+---
+
+## 🧪 Realistic Scenario
+
+💼 Corporate environment:
+
+* User opens phishing email
+* Dropper launches `svchost.exe`
+* Hollowing replaces its memory
+* Malware communicates with C2
+* Blue team sees:
+
+  * svchost.exe making suspicious network calls
+
+🚩 Red flag:
+
+* Legit process doing **non-legit behavior**
+
+---
+
+## 🔍 Blue Team Detection Clues
+
+* Mismatch between:
+
+  * Process name
+  * Loaded memory sections
+* Abnormal parent process
+* Suspended → resumed processes
+
+---
+
+---
+
+# 🎭 T1055.013 – **Process Masquerading**
+
+⚠️ This is **often confused with hollowing** — but it’s different.
+
+---
+
+## 🔹 What is Process Masquerading?
+
+> Malware **pretends to be a legitimate process by name or path**, but it is actually a malicious executable.
+
+❗ No injection needed.
+
+---
+
+## 🧠 Key idea
+
+* Looks legit
+* Actually fake
+
+Examples:
+
+```
+svch0st.exe   (zero instead of o)
+explorer .exe (extra space)
+C:\Windows\svchost.exe (wrong path)
+```
+
+---
+
+## 🎯 Why attackers use masquerading
+
+* Trick users
+* Trick admins
+* Trick basic monitoring tools
+
+---
+
+## 🧪 Realistic Scenario
+
+🧑‍💻 User downloads cracked software:
+
+* Malware saved as `chrome_update.exe`
+* Icon copied from Chrome
+* User runs it
+* Process looks “normal” in Task Manager
+* Malware runs freely
+
+🚩 Red flag:
+
+* Process path mismatch
+* Unsigned binary
+* Wrong parent process
+
+---
+
+## 🔍 Blue Team Detection Clues
+
+* Legit name, wrong location
+* Suspicious spelling
+* No digital signature
+* Unexpected startup behavior
+
+---
+
+# 🆚 Quick Comparison (Very Important)
+
+| Technique            | Injection? | Legit Process Used | Code Replaced |
+| -------------------- | ---------- | ------------------ | ------------- |
+| Process Injection    | ✅          | Yes                | No            |
+| Process Hollowing    | ✅          | Yes                | ✅ Yes         |
+| Process Masquerading | ❌          | Looks legit        | N/A           |
+
+---
+
