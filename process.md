@@ -16,6 +16,184 @@ Example:
 
 ---
 
+Nice diagram 👍
+This is a **classic Windows process memory + resources layout**. I’ll explain **each component** in **simple language**, plus **why it matters (exam + security)**.
+
+---
+
+# 🧠 Components Shown in the Process Diagram
+
+---
+
+## 1️⃣ **Code (Text Section)**
+
+### 🔹 What it is
+
+* Contains the **actual program instructions**
+* Loaded from the `.exe` file
+* Usually **read-only**
+
+### 🔹 What lives here
+
+* Machine instructions
+* Program logic
+
+### 🔹 Why important
+
+* Prevents accidental modification
+* Malware tries to **redirect execution to heap/stack**, not here
+
+📌 **Exam tip**: Code section ≠ execution → **threads execute**
+
+---
+
+## 2️⃣ **Global Variables (Data Section)**
+
+### 🔹 What it is
+
+* Stores **global and static variables**
+* Exists for the **entire lifetime of the process**
+
+### 🔹 Examples
+
+```c
+int counter = 0;
+static int flag = 1;
+```
+
+### 🔹 Why important
+
+* Shared across all threads
+* Improper use → race conditions
+
+📌 **Security note**: Attackers may modify globals to change behavior
+
+---
+
+## 3️⃣ **Process Heap**
+
+### 🔹 What it is
+
+* Memory for **dynamic allocation at runtime**
+* Grows and shrinks as needed
+
+### 🔹 Used for
+
+* Objects
+* Buffers
+* User input
+* Network data
+
+### 🔹 Why important
+
+* Writable
+* Large
+* Frequently abused
+
+📌 **Security note**:
+
+* Heap spraying
+* Payload storage
+* Exploitation targets
+
+---
+
+## 4️⃣ **Process Resources (Open Files, Heaps)**
+
+### 🔹 What it is
+
+* OS-managed resources owned by the process
+
+### 🔹 Includes
+
+* Open files
+* Registry keys
+* Mutexes
+* Events
+* Additional heaps
+
+### 🔹 Why important
+
+* Managed via **handles**
+* Enforces access control
+
+📌 **Exam tip**: Resources are accessed via **handle table**
+
+---
+
+## 5️⃣ **Environment Block**
+
+### 🔹 What it is
+
+* Stores **environment variables**
+* Inherited from parent process
+
+### 🔹 Examples
+
+```
+PATH
+TEMP
+USERNAME
+SYSTEMROOT
+```
+
+### 🔹 Why important
+
+* Influences program behavior
+* Malware checks env vars to detect sandbox/VM
+
+📌 **Security note**: Environment-based evasion is common
+
+---
+
+## 6️⃣ **Threads (Thread 1 … Thread N)**
+
+### 🔹 What they are
+
+* **Actual execution units**
+* Each thread has:
+
+  * Its own stack
+  * CPU context
+
+### 🔹 Shared between threads
+
+* Code
+* Heap
+* Global variables
+* Handles
+
+### 🔹 Why important
+
+* Without threads → process does nothing
+
+📌 **Golden rule**:
+
+> **Process = container
+> Thread = execution**
+
+---
+
+## 🔄 How Everything Connects
+
+```
+Process
+ ├─ Code        (what to run)
+ ├─ Globals     (shared data)
+ ├─ Heap        (dynamic memory)
+ ├─ Resources   (files, handles)
+ ├─ Env Block   (settings)
+ └─ Threads     (run the code)
+```
+
+---
+
+
+
+
+
+
+
 ## 2️⃣ Process vs Program
 
 | Program             | Process                    |
