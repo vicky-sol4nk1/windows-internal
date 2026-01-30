@@ -2,6 +2,8 @@ all about process
 
 # 🧠 Windows Internals – Process (Complete Notes)
 
+<img width="1139" height="350" alt="image" src="https://github.com/user-attachments/assets/8a284c4a-b77f-41b8-8df9-2f5ec0948b4b" />
+
 ## 1️⃣ What is a Process?
 
 A **process** is a running instance of a program. It is a container that holds all the resources required to execute a program.
