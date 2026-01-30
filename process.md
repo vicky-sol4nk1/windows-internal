@@ -229,6 +229,17 @@ Process
 
 👉 **Execution happens here**
 
+| Feature          | Process                   | Thread                  |
+| ---------------- | ------------------------- | ----------------------- |
+| Purpose          | Resource container        | Executes code           |
+| Execution        | ❌ Cannot execute          | ✅ Executes instructions |
+| Memory           | Own virtual address space | Shares process memory   |
+| Creation         | Heavy                     | Lightweight             |
+| Communication    | IPC (pipes, sockets)      | Shared memory           |
+| Isolation        | Strong                    | Weak                    |
+| Crash impact     | Other processes safe      | Whole process may crash |
+| Minimum required | 1 per program             | 1 per process           |
+
 ---
 
 ### 🔹 3. Executable Image (.exe)
