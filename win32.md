@@ -12,7 +12,7 @@ You want to do something useful → open file, show window, play sound, read key
 You don't talk directly to hardware or deep OS parts → instead you call ready-made functions like CreateFile(), MessageBox(), CreateWindow(), WriteFile(), etc.
 
 
-(/windows-internalimages/win32.png)
+<img src="/images/win32.png">
 
 | Area          | Example                        |
 | ------------- | ------------------------------ |
