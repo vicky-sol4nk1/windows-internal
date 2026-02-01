@@ -11,8 +11,8 @@ You write a program (Notepad, Chrome, game, calculator…)
 You want to do something useful → open file, show window, play sound, read keyboard, draw something on screen, create folder, etc.
 You don't talk directly to hardware or deep OS parts → instead you call ready-made functions like CreateFile(), MessageBox(), CreateWindow(), WriteFile(), etc.
 
-[/images/wind32.png
-](https://github.com/vicky-sol4nk1/windows-internal/blob/main/images/win32.png)
+
+(/windows-internalimages/win32.png)
 
 | Area          | Example                        |
 | ------------- | ------------------------------ |
