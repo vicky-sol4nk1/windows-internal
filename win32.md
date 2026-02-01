@@ -11,7 +11,7 @@ You write a program (Notepad, Chrome, game, calculator…)
 You want to do something useful → open file, show window, play sound, read keyboard, draw something on screen, create folder, etc.
 You don't talk directly to hardware or deep OS parts → instead you call ready-made functions like CreateFile(), MessageBox(), CreateWindow(), WriteFile(), etc.
 
-
+this diagram show how a user program in usermode request to a kernal mode for h/w access
 <img src="/images/win32.png">
 
 | Area          | Example                        |
